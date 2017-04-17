@@ -1,0 +1,9 @@
+﻿Group: Other
+FriendlyName: 客户端
+SystemName: Other.Client
+Version: 1.00
+SupportedVersions: 3.90
+Author: 丁军勇
+DisplayOrder: 1
+FileName: Nop.Plugin.Other.Client.dll
+Description: 手机客户端/WEBAPI

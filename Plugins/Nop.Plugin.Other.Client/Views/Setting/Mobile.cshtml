@@ -1,0 +1,1163 @@
+﻿@model MobileSettingsModel
+
+@using Nop.Plugin.Other.Client.Models;
+@using Nop.Web.Framework;
+@using Nop.Web.Framework.UI
+
+@{
+
+    Layout = "~/Administration/Views/Shared/_AdminLayout.cshtml"; 
+    //page title
+    ViewBag.Title = T("Admin.Configuration.Settings.CustomerUser").Text;
+    //active menu item (system name)
+    Html.SetActiveMenuItemSystemName("Client-Settings-Menu");
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            手机客户端数据设置
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                @T("Admin.Common.Save")
+            </button>
+        </div>
+    </div>
+    @Html.ValidationSummary(false)
+
+    @*<script>
+        $(document).ready(function () {
+            bindBootstrapTabSelectEvent('customersettings-edit');
+        });
+    </script>*@
+
+    <div class="content">
+        <div class="form-horizontal">
+            @Html.Action("Mode", "Setting")
+
+            <div id="customersettings-edit" class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    @Html.RenderBootstrapTabHeader("tab-mobilenivoslider", @T("轮播设置"), true)
+                    @Html.RenderBootstrapTabHeader("tab-mobilecatalognavigation", @T("类目导航设置"))
+                    @Html.RenderBootstrapTabHeader("tab-mobileactivity", @T("活动设置"))
+                    @Html.RenderBootstrapTabHeader("tab-mobilekeyword", @T("推荐词设置"))
+                </ul>
+                <div class="tab-content">
+                    @Html.RenderBootstrapTabContent("tab-mobilenivoslider", @TabMobileNivosliderSettings(), true)
+                    @Html.RenderBootstrapTabContent("tab-mobilecatalognavigation", @TabMobileCatalogNavigationSettings())
+                    @Html.RenderBootstrapTabContent("tab-mobileactivity", @TabMobileActivitySettings())
+                    @Html.RenderBootstrapTabContent("tab-mobilekeyword", @TabMobileKeywordSettings())
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*{
+        //custom tabs
+        var eventMessage = new AdminTabStripCreated(this.Html, "customersettings-edit");
+        EngineContext.Current.Resolve<IEventPublisher>().Publish(eventMessage);
+        foreach (var eventBlock in eventMessage.BlocksToRender)
+        {
+            @eventBlock
+        }
+    }*@
+
+    @*save selected tab name*@
+    <input type="hidden" id="selected-tab-name" name="selected-tab-name" value="@(Html.GetSelectedTabName())">
+}
+
+@helper TabMobileNivosliderSettings()
+{
+    <div class="panel-group">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                <div class="panel-heading">
+                图片1
+                </div>
+                <div class="panel-body">
+                <div class="form-group">
+                <div class="col-md-3">
+                    @Html.NopLabelFor(model => model.MobileNivosliderSettings.Picture1Id)
+                </div>
+                <div class="col-md-9">
+                    @Html.NopEditorFor(model => model.MobileNivosliderSettings.Picture1Id)
+                    @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Picture1Id)
+                </div>
+                </div>
+                <div class="form-group">
+                <div class="col-md-3">
+                    @Html.NopLabelFor(model => model.MobileNivosliderSettings.Text1)
+                </div>
+                <div class="col-md-9">
+                    @Html.NopEditorFor(model => model.MobileNivosliderSettings.Text1)
+                    @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Text1)
+                </div>
+                </div>
+                <div class="form-group">
+                <div class="col-md-3">
+                    @Html.NopLabelFor(model => model.MobileNivosliderSettings.Link1)
+                </div>
+                <div class="col-md-9">
+                    @Html.NopEditorFor(model => model.MobileNivosliderSettings.Link1)
+                    @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Link1)
+                </div>
+                </div>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片2
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileNivosliderSettings.Picture2Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileNivosliderSettings.Picture2Id)
+                                @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Picture2Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                
+                                @Html.NopLabelFor(model => model.MobileNivosliderSettings.Text2)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileNivosliderSettings.Text2)
+                                @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Text2)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileNivosliderSettings.Link2)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileNivosliderSettings.Link2)
+                                @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Link2)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片3
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileNivosliderSettings.Picture3Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileNivosliderSettings.Picture3Id)
+                                @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Picture3Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileNivosliderSettings.Text3)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileNivosliderSettings.Text3)
+                                @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Text3)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileNivosliderSettings.Link3)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileNivosliderSettings.Link3)
+                                @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Link3)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片4
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileNivosliderSettings.Picture4Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileNivosliderSettings.Picture4Id)
+                                @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Picture4Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileNivosliderSettings.Text4)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileNivosliderSettings.Text4)
+                                @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Text4)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileNivosliderSettings.Link4)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileNivosliderSettings.Link4)
+                                @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Link4)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片5
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileNivosliderSettings.Picture5Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileNivosliderSettings.Picture5Id)
+                                @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Picture5Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                
+                                @Html.NopLabelFor(model => model.MobileNivosliderSettings.Text5)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileNivosliderSettings.Text5)
+                                @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Text5)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileNivosliderSettings.Link5)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileNivosliderSettings.Link5)
+                                @Html.ValidationMessageFor(model => model.MobileNivosliderSettings.Link5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+       
+    </div>
+}
+@helper TabMobileCatalogNavigationSettings()
+{
+    <div class="panel-group">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片1
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Picture1Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Picture1Id)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Picture1Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Text1)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Text1)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Text1)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Link1)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Link1)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Link1)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片2
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Picture2Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Picture2Id)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Picture2Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Text2)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Text2)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Text2)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Link2)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Link2)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Link2)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片3
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Picture3Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Picture3Id)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Picture3Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Text3)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Text3)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Text3)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Link3)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Link3)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Link3)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片4
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Picture4Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Picture4Id)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Picture4Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Text4)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Text4)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Text4)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Link4)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Link4)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Link4)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片5
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Picture5Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Picture5Id)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Picture5Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Text5)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Text5)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Text5)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Link5)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Link5)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Link5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片6
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Picture6Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Picture6Id)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Picture6Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Text6)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Text6)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Text6)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Link6)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Link6)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Link6)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片7
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Picture7Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Picture7Id)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Picture7Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Text7)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Text7)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Text7)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Link7)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Link7)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Link7)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片8
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Picture8Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Picture8Id)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Picture8Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Text8)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Text8)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Text8)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileCatalogNavigationSettings.Link8)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileCatalogNavigationSettings.Link8)
+                                @Html.ValidationMessageFor(model => model.MobileCatalogNavigationSettings.Link8)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@helper TabMobileActivitySettings()
+{
+    <div class="panel-group">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片1
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Picture1Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Picture1Id)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Picture1Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Link1)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Link1)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Link1)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片2
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Picture2Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Picture2Id)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Picture2Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Link2)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Link2)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Link2)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片3
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Picture3Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Picture3Id)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Picture3Id)
+                            </div>
+                        </div>
+  
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Link3)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Link3)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Link3)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片4
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Picture4Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Picture4Id)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Picture4Id)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Link4)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Link4)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Link4)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片5
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Picture5Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Picture5Id)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Picture5Id)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Link5)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Link5)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Link5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片6
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Picture6Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Picture6Id)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Picture6Id)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Link6)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Link6)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Link6)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片7
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Picture7Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Picture7Id)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Picture7Id)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Link7)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Link7)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Link7)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片8
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Picture8Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Picture8Id)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Picture8Id)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Link8)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Link8)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Link8)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片9
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Picture9Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Picture9Id)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Picture9Id)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Link9)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Link9)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Link9)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        图片10
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Picture10Id)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Picture10Id)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Picture10Id)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileActivitySettings.Link10)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileActivitySettings.Link10)
+                                @Html.ValidationMessageFor(model => model.MobileActivitySettings.Link10)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@helper TabMobileKeywordSettings()
+{
+    <div class="panel-group">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        推荐词1
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Text1)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Text1)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Text1)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Link1)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Link1)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Link1)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        推荐词2
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Text2)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Text2)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Text2)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Link2)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Link2)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Link2)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        推荐词3
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Text3)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Text3)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Text3)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Link3)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Link3)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Link3)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        推荐词4
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Text4)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Text4)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Text4)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Link4)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Link4)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Link4)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        推荐词5
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Text5)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Text5)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Text5)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Link5)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Link5)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Link5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        推荐词6
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Text6)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Text6)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Text6)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Link6)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Link6)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Link6)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        推荐词7
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Text7)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Text7)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Text7)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Link7)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Link7)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Link7)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        推荐词8
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Text8)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Text8)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Text8)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Link8)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Link8)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Link8)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        推荐词9
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Text9)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Text9)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Text9)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Link9)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Link9)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Link9)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        推荐词10
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Text10)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Text10)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Text10)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.NopLabelFor(model => model.MobileKeywordSettings.Link10)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.NopEditorFor(model => model.MobileKeywordSettings.Link10)
+                                @Html.ValidationMessageFor(model => model.MobileKeywordSettings.Link10)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

@@ -1,0 +1,7 @@
+﻿.weixin-btn{
+    display: inline-block;
+    width: 150px;
+    height: 35px;
+    background-image: url('images/weixinlogo.jpg');
+    background-repeat: no-repeat;
+}
