@@ -1,2 +1,2 @@
 DataProvider: sqlserver
-DataConnectionString: Data Source=USER-20170105XC\SQLSERVER;Initial Catalog=nopcommerce39;Persist Security Info=True;User ID=sa;Password=123456
+DataConnectionString: Data Source=119.29.60.130;Initial Catalog=nopcommerce39;Persist Security Info=True;User ID=sa;Password=Djy123456789
